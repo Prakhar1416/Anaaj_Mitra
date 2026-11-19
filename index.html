@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Anaaj Mitra | Smart Village Coordination</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            🌾 Anaaj Mitra
+        </div>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+            System Online
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <div>
+                <p class="eyebrow">SMART VILLAGE RESOURCE COORDINATION</p>
+
+                <h1>
+                    Intelligent Agricultural
+                    <span>Resource Management</span>
+                </h1>
+
+                <p class="description">
+                    A trusted multi-agent AI framework for
+                    village resource coordination and
+                    agricultural warehouse management.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- STAT CARDS -->
+
+        <section class="stats">
+
+            <div class="card">
+
+                <p>WAREHOUSE FILL</p>
+
+                <h2 id="fillValue">72%</h2>
+
+                <div class="progress">
+                    <div id="fillBar"></div>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>TEMPERATURE</p>
+
+                <h2 id="temperatureValue">27.4°C</h2>
+
+                <small>Normal range</small>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>HUMIDITY</p>
+
+                <h2 id="humidityValue">61%</h2>
+
+                <small>Monitoring</small>
+
+            </div>
+
+
+            <div class="card trust">
+
+                <p>TRUST SCORE</p>
+
+                <h2 id="trustValue">86/100</h2>
+
+                <small>Verified</small>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAIN GRID -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- SENSOR PANEL -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="label">IoT MONITORING</p>
+                        <h2>Sensor Data</h2>
+                    </div>
+
+                    <span class="live">LIVE</span>
+
+                </div>
+
+
+                <div class="sensor">
+
+                    <div class="sensor-icon">📦</div>
+
+                    <div>
+                        <strong>Warehouse Capacity</strong>
+                        <p>HC-SR04 Ultrasonic Sensor</p>
+                    </div>
+
+                    <b id="sensorFill">72%</b>
+
+                </div>
+
+
+                <div class="sensor">
+
+                    <div class="sensor-icon">🌡️</div>
+
+                    <div>
+                        <strong>Temperature</strong>
+                        <p>DHT11 / DHT22 Sensor</p>
+                    </div>
+
+                    <b id="sensorTemp">27.4°C</b>
+
+                </div>
+
+
+                <div class="sensor">
+
+                    <div class="sensor-icon">💧</div>
+
+                    <div>
+                        <strong>Humidity</strong>
+                        <p>DHT11 / DHT22 Sensor</p>
+                    </div>
+
+                    <b id="sensorHumidity">61%</b>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AGENTS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="label">MULTI-AGENT SYSTEM</p>
+                        <h2>Agent Status</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status active"></span>
+
+                    <div>
+                        <strong>Water Agent</strong>
+                        <p>Monitoring rainfall & drought risk</p>
+                    </div>
+
+                    <span class="badge">ACTIVE</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status active"></span>
+
+                    <div>
+                        <strong>Crop Agent</strong>
+                        <p>Crop recommendation engine</p>
+                    </div>
+
+                    <span class="badge">ACTIVE</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status active"></span>
+
+                    <div>
+                        <strong>Storage Agent</strong>
+                        <p>Capacity monitoring</p>
+                    </div>
+
+                    <span class="badge">ACTIVE</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status active"></span>
+
+                    <div>
+                        <strong>Logistics Agent</strong>
+                        <p>Warehouse coordination</p>
+                    </div>
+
+                    <span class="badge">ACTIVE</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status"></span>
+
+                    <div>
+                        <strong>Health Agent</strong>
+                        <p>Community nutrition priority</p>
+                    </div>
+
+                    <span class="badge">READY</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SIMULATION -->
+
+        <section class="panel simulation">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="label">PROTOTYPE CONTROL</p>
+
+                    <h2>Environmental Simulation</h2>
+
+                </div>
+
+                <button onclick="runSimulation()">
+                    ▶ Run Simulation
+                </button>
+
+            </div>
+
+
+            <div class="controls">
+
+                <div>
+
+                    <label>
+                        Rainfall
+                        <span id="rainValue">42 mm</span>
+                    </label>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="150"
+                        value="42"
+                        id="rainfall"
+                        oninput="updateValues()"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Temperature
+                        <span id="tempControlValue">27°C</span>
+                    </label>
+
+                    <input
+                        type="range"
+                        min="10"
+                        max="50"
+                        value="27"
+                        id="temperature"
+                        oninput="updateValues()"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Humidity
+                        <span id="humidityControlValue">61%</span>
+                    </label>
+
+                    <input
+                        type="range"
+                        min="20"
+                        max="100"
+                        value="61"
+                        id="humidity"
+                        oninput="updateValues()"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CONVERSATION -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="label">COORDINATION LOG</p>
+
+                    <h2>Agent Conversation</h2>
+
+                </div>
+
+            </div>
+
+
+            <div id="conversation">
+
+                <div class="message">
+
+                    <span>WATER AGENT</span>
+
+                    <p>
+                        Rainfall data received.
+                        Drought risk currently classified as medium.
+                    </p>
+
+                </div>
+
+
+                <div class="message">
+
+                    <span>CROP AGENT</span>
+
+                    <p>
+                        Recommended crop: Millet.
+                        Storage requirement: Dry grain.
+                    </p>
+
+                </div>
+
+
+                <div class="message">
+
+                    <span>STORAGE AGENT</span>
+
+                    <p>
+                        Warehouse capacity verified.
+                        Current utilization: 72%.
+                    </p>
+
+                </div>
+
+
+                <div class="message">
+
+                    <span>LOGISTICS AGENT</span>
+
+                    <p>
+                        Monitoring neighbouring warehouse capacity.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Anaaj Mitra © 2026 · Engineering Project in Community Services
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
