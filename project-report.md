@@ -5,13 +5,13 @@
 
 ## 1. Project Overview
 
-**Anaaj Mitra** (Hindi: *Grain Friend*) is a browser-based prototype of a Smart Village Agricultural Resource Coordination System. The project simulates a multi-agent AI framework designed to help rural farming communities manage agricultural warehouses, monitor environmental conditions, and make data-driven crop recommendations — all within a single-page web application.
+**Anaaj Mitra** (Hindi: *Grain Friend*) is a browser-based prototype of a Smart Village Agricultural Resource Coordination System. Its single-page web application simulates multi-agent decisions. A separate, basic FastAPI backend provides a health check and configuration endpoint and initializes a SQLite database.
 
 | Attribute | Detail |
 |---|---|
 | Project Type | EPICS (Engineering Projects in Community Services) |
-| Technology Stack | HTML5, CSS3, Vanilla JavaScript |
-| Architecture | Single-Page Application (SPA) |
+| Technology Stack | HTML5, CSS3, Vanilla JavaScript, Python, FastAPI, SQLite |
+| Architecture | Static SPA + separate API |
 | Target Users | Village-level agricultural coordinators, farmers, warehouse managers |
 | Year | 2026 |
 
@@ -59,6 +59,12 @@ Anaaj Mitra addresses these by simulating an intelligent coordination layer that
 | `index.html` | Semantic layout, all UI sections, element IDs for JS binding |
 | `style.css` | Full visual design — responsive grid, cards, typography, colour system |
 | `script.js` | Simulation logic, agent decision engine, DOM manipulation |
+| `backend/api.py` | FastAPI health and configuration endpoints |
+| `backend/config.py` | Demo site IDs and simulation thresholds |
+| `backend/database.py` | SQLite database initialization |
+
+The browser simulation is independent of the API. Agent logic, data exchange,
+and frontend/API integration are not implemented in the backend yet.
 
 ---
 
@@ -238,10 +244,12 @@ The colour system is entirely green-toned — consistent with agriculture, natur
 |---|---|
 | Markup | HTML5 (semantic tags: `header`, `main`, `section`, `footer`) |
 | Styling | CSS3 (Grid, Flexbox, custom properties, media queries) |
-| Logic | Vanilla JavaScript (DOM manipulation, conditional logic) |
-| Hosting | Static — no backend, no dependencies, no build step |
+| Frontend logic | Vanilla JavaScript (DOM manipulation, conditional logic) |
+| Backend | Python, FastAPI, Uvicorn, SQLite |
+| Frontend hosting | Static files — no build step |
 
-**Dependencies:** None. Zero external libraries, frameworks, or APIs. Fully self-contained.
+Backend setup and run instructions are in `README.md`. The browser UI remains
+dependency-free; the API dependencies are listed in `requirements.txt`.
 
 ---
 
@@ -263,14 +271,16 @@ The colour system is entirely green-toned — consistent with agriculture, natur
 ### Current Limitations
 1. **No real IoT integration** — sensor values are simulated via sliders, not actual hardware data.
 2. **Static warehouse data** — the 72% fill level is hardcoded and does not change with simulation runs.
-3. **No data persistence** — all state is lost on page refresh.
+3. **No application data persistence** — the frontend is not connected to the
+   backend; the SQLite database is initialized but currently has no tables.
 4. **Single-variable trust score** — the trust model is simplistic and does not reflect real agent agreement protocols.
 5. **Health Agent not functional** — it appears in the UI but has no logic wired up.
 6. **No authentication** — open access, no user roles.
 
 ### Suggested Future Enhancements
 - Connect real DHT11/DHT22 and HC-SR04 sensors via a Raspberry Pi / Arduino + WebSocket bridge.
-- Add a backend (Node.js / Python Flask) for data persistence and historical trend charts.
+- Define agent data contracts, then connect the frontend to the API and add
+  application data persistence and historical trend charts.
 - Implement the Health Agent logic (malnutrition risk scoring based on crop yield and rainfall data).
 - Integrate weather API (e.g., OpenWeatherMap) for real rainfall data.
 - Add a map view showing multiple village warehouses.
