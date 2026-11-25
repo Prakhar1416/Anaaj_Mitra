@@ -238,14 +238,14 @@
 
                 <div class="agent">
 
-                    <span class="agent-status"></span>
+                    <span class="agent-status" id="healthAgentDot"></span>
 
                     <div>
                         <strong>Health Agent</strong>
                         <p>Community nutrition priority</p>
                     </div>
 
-                    <span class="badge">READY</span>
+                    <span class="badge" id="healthAgentBadge">READY</span>
 
                 </div>
 
@@ -338,6 +338,77 @@
 
         </section>
 
+
+
+        <section class="panel health-panel" id="healthPanel">
+
+            <div class="panel-header">
+
+                <div>
+                    <p class="label">HEALTH AGENT</p>
+                    <h2>Nutrition priority</h2>
+                </div>
+
+                <button type="button" id="healthRefresh">Refresh</button>
+
+            </div>
+
+            <p class="health-note" id="healthStockNote">
+                Warehouse stock used for reassessment is simulated until a storage agent publishes it.
+            </p>
+
+            <form id="healthForm" class="health-grid">
+
+                <label>
+                    Hamlet
+                    <select id="healthHamlet">
+                        <option value="hamlet-001">hamlet-001</option>
+                    </select>
+                </label>
+
+                <label>
+                    Community health worker
+                    <input id="healthReporter" type="text" maxlength="64" placeholder="CHW001">
+                </label>
+
+                <label>
+                    Reason
+                    <input id="healthReason" type="text" maxlength="500" placeholder="High nutritional vulnerability">
+                </label>
+
+                <label class="health-check">
+                    <input id="healthPriority" type="checkbox" checked>
+                    Nutrition priority
+                </label>
+
+                <div class="health-actions">
+                    <button type="submit">Submit health report</button>
+                </div>
+
+            </form>
+
+            <p class="health-status" id="healthStatus"></p>
+
+            <div class="health-results">
+
+                <div>
+                    <p class="label">PRIORITY HAMLETS</p>
+                    <div id="healthPriorities"></div>
+                </div>
+
+                <div>
+                    <p class="label">LOGISTICS REASSESSMENT</p>
+                    <div id="healthDecisions"></div>
+                </div>
+
+                <div>
+                    <p class="label">AGENT LOG</p>
+                    <div id="healthLogs"></div>
+                </div>
+
+            </div>
+
+        </section>
 
 
         <!-- CONVERSATION -->

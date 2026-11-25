@@ -1,4 +1,8 @@
 # Anaaj Mitra — Project Report
+
+> The health-agent backend is documented in `README.md`, `BACKEND_ARCHITECTURE.md`, `SHARED_STATE_SCHEMA.md`, and `API_DOCUMENTATION.md`. The sections below describe the original browser simulation, which is still the environmental demo on the page.
+
+
 ### Engineering Project in Community Services (EPICS)
 
 ---

@@ -376,6 +376,66 @@ input[type="range"] {
 }
 
 
+.health-panel {
+    margin-bottom: 20px;
+}
+
+.health-note,
+.health-status {
+    color: #667267;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.health-note {
+    margin-bottom: 16px;
+}
+
+.health-status {
+    margin-top: 14px;
+    color: #4d6650;
+}
+
+.health-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.health-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.health-grid input[type="text"],
+.health-grid select {
+    border: 1px solid #e2e8df;
+    border-radius: 9px;
+    padding: 10px 12px;
+    font: inherit;
+    color: #172018;
+    background: white;
+}
+
+.health-grid label.health-check {
+    flex-direction: row;
+    align-items: center;
+}
+
+.health-actions {
+    grid-column: 1 / -1;
+}
+
+.health-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 18px;
+}
+
 footer {
     text-align: center;
 
@@ -393,7 +453,9 @@ footer {
 
     .stats,
     .dashboard-grid,
-    .controls {
+    .controls,
+    .health-grid,
+    .health-results {
         grid-template-columns: 1fr;
     }
 
