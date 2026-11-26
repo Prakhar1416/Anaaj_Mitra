@@ -22,7 +22,222 @@ function updateValues() {
 
 
 
-function runSimulation() {
+async function runSimulation() {
+
+    const note = document.getElementById("pipelineNote");
+
+    if (note) {
+
+        note.textContent = "Running water, crop, storage, spoilage, logistics, trust, and loan…";
+
+    }
+
+    try {
+
+        const response = await fetch(healthApiBase() + "/api/pipeline/run", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                soil_type: document.getElementById("soilType").value,
+                scenario: document.getElementById("storageScenario").value,
+                temperature_c: Number(document.getElementById("temperature").value),
+                humidity_pct: Number(document.getElementById("humidity").value),
+                rainfall_mm: Number(document.getElementById("rainfall").value)
+            })
+        });
+
+        if (!response.ok) {
+
+            throw new Error("pipeline");
+
+        }
+
+        renderPipeline(await response.json());
+
+        refreshHealthDashboard();
+
+    } catch (error) {
+
+        if (note) {
+
+            note.textContent = "The coordination API is not reachable, so this run used the in-browser simulation only.";
+
+        }
+
+        runLocalSimulation();
+
+    }
+}
+
+
+function renderPipeline(result) {
+
+    const fill = Math.round(result.storage.fill_pct);
+
+    document.getElementById("fillValue").innerText = fill + "%";
+
+    document.getElementById("fillBar").style.width = fill + "%";
+
+    document.getElementById("sensorFill").innerText = fill + "%";
+
+    document.getElementById("temperatureValue").innerText = result.sensor.temperature_c + "°C";
+
+    document.getElementById("sensorTemp").innerText = result.sensor.temperature_c + "°C";
+
+    document.getElementById("humidityValue").innerText = result.sensor.humidity_pct + "%";
+
+    document.getElementById("sensorHumidity").innerText = result.sensor.humidity_pct + "%";
+
+    document.getElementById("trustValue").innerText =
+        Math.round(result.trust.trust_score * 100) + "/100";
+
+    markStreamAgent("water", result.water.groundwater_category);
+
+    markStreamAgent("crop", result.crop.selected_crop);
+
+    markStreamAgent("storage", result.storage.status);
+
+    markStreamAgent("spoilage", result.spoilage.risk_level);
+
+    markStreamAgent(
+        "logistics",
+        result.logistics.selected_warehouse || result.logistics.status || "HOLD"
+    );
+
+    markStreamAgent(
+        "finance",
+        result.loan.decision === "receipt" ? "RECEIPT" : "REVIEW"
+    );
+
+    const conversation = document.getElementById("conversation");
+
+    conversation.innerHTML = "";
+
+    result.conversation.forEach(function (entry) {
+
+        addMessage(entry.agent.toUpperCase(), entry.message);
+
+    });
+
+    const cards = [
+        [
+            "Water",
+            result.water.village + ", " + result.water.district
+            + ". Groundwater " + result.water.groundwater_category
+            + ". 30-day drought: " + result.water.drought_risk_30d + "."
+        ],
+        [
+            "Crop",
+            "Recommended " + result.crop.recommended_crops.join(", ")
+            + ". Storage check: " + result.crop.storage_check.status + "."
+        ],
+        [
+            "Storage",
+            result.storage.status + ". Fill " + result.storage.fill_pct
+            + "%. Free capacity " + result.storage.available_capacity_kg + " kg."
+        ],
+        [
+            "Spoilage",
+            result.spoilage.risk_level + " (score " + result.spoilage.spoilage_risk_score
+            + "). " + result.spoilage.actuator.message
+        ],
+        [
+            "Logistics",
+            result.logistics.selected_warehouse
+                ? "Neighbour warehouse " + result.logistics.selected_warehouse + " selected."
+                : "Primary warehouse has enough capacity."
+        ],
+        [
+            "Finance",
+            "Trust " + result.trust.trust_score
+            + ". Loan decision: " + result.loan.decision
+            + (result.loan.receipt_id ? " (" + result.loan.receipt_id + ")." : ".")
+        ]
+    ];
+
+    const host = document.getElementById("pipelineResults");
+
+    host.innerHTML = "";
+
+    cards.forEach(function (card) {
+
+        const node = document.createElement("div");
+
+        node.className = "pipeline-card";
+
+        node.innerHTML = "<strong>" + card[0] + "</strong><p></p>";
+
+        node.querySelector("p").textContent = card[1];
+
+        host.appendChild(node);
+
+    });
+
+    const validation = document.createElement("div");
+
+    validation.className = "pipeline-card";
+
+    const validationText = document.createElement("p");
+
+    validation.innerHTML = "<strong>Validation</strong>";
+
+    validationText.textContent = result.validation.map(function (item) {
+
+        return item.component + ": " + item.status;
+
+    }).join(". ") + ".";
+
+    validation.appendChild(validationText);
+
+    host.appendChild(validation);
+
+    if (noteExists()) {
+
+        document.getElementById("pipelineNote").textContent = result.notes[0];
+
+    }
+
+    const stockNote = document.getElementById("healthStockNote");
+
+    if (stockNote && result.warehouse) {
+
+        stockNote.textContent =
+            "Warehouse " + result.warehouse.warehouse_id
+            + " now has " + result.warehouse.available_stock_kg
+            + " kg of " + result.warehouse.grain_type
+            + " from the storage agent. Submit a health report to reassess nutrition priority.";
+
+    }
+}
+
+
+function noteExists() {
+
+    return document.getElementById("pipelineNote");
+}
+
+
+function markStreamAgent(name, label) {
+
+    const dot = document.getElementById(name + "AgentDot");
+
+    const badge = document.getElementById(name + "Badge");
+
+    if (dot) {
+
+        dot.className = "agent-status active";
+
+    }
+
+    if (badge) {
+
+        badge.textContent = String(label).toUpperCase();
+
+    }
+}
+
+
+function runLocalSimulation() {
 
     const rainfall =
         document.getElementById("rainfall").value;

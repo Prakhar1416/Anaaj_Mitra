@@ -411,7 +411,9 @@ input[type="range"] {
 }
 
 .health-grid input[type="text"],
-.health-grid select {
+.health-grid select,
+.controls select {
+    width: 100%;
     border: 1px solid #e2e8df;
     border-radius: 9px;
     padding: 10px 12px;
@@ -434,6 +436,24 @@ input[type="range"] {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
     margin-top: 18px;
+}
+
+.pipeline-card {
+    background: #f7faf6;
+    border: 1px solid #e2e8df;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.pipeline-card strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.pipeline-card p {
+    color: #596259;
+    font-size: 13px;
+    line-height: 1.45;
 }
 
 footer {

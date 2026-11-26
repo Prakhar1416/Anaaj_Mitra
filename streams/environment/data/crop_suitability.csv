@@ -1,0 +1,5 @@
+soil_type,water_condition,recommended_crops,data_source
+Sandy,High,Pearl Millet,DEMO_RULE
+Loamy,Medium,"Wheat;Maize",DEMO_RULE
+Clayey,Low,Rice,DEMO_RULE
+Alluvial,Medium,"Wheat;Maize",DEMO_RULE

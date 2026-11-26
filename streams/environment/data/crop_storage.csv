@@ -1,0 +1,7 @@
+crop,required_storage,data_source
+Pigeon Pea,Dry Grain Storage,DEMO_RULE
+Sesame,Dry Grain Storage,DEMO_RULE
+Wheat,Dry Grain Storage,DEMO_RULE
+Maize,Dry Grain Storage,DEMO_RULE
+Pearl Millet,Dry Grain Storage,DEMO_RULE
+Rice,Moisture-Controlled Storage,DEMO_RULE

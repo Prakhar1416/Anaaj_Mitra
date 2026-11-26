@@ -182,56 +182,84 @@
 
                 <div class="agent">
 
-                    <span class="agent-status active"></span>
+                    <span class="agent-status" id="waterAgentDot"></span>
 
                     <div>
                         <strong>Water Agent</strong>
-                        <p>Monitoring rainfall & drought risk</p>
+                        <p>CGWB groundwater and district rainfall</p>
                     </div>
 
-                    <span class="badge">ACTIVE</span>
+                    <span class="badge" id="waterBadge">READY</span>
 
                 </div>
 
 
                 <div class="agent">
 
-                    <span class="agent-status active"></span>
+                    <span class="agent-status" id="cropAgentDot"></span>
 
                     <div>
                         <strong>Crop Agent</strong>
                         <p>Crop recommendation engine</p>
                     </div>
 
-                    <span class="badge">ACTIVE</span>
+                    <span class="badge" id="cropBadge">READY</span>
 
                 </div>
 
 
                 <div class="agent">
 
-                    <span class="agent-status active"></span>
+                    <span class="agent-status" id="storageAgentDot"></span>
 
                     <div>
                         <strong>Storage Agent</strong>
                         <p>Capacity monitoring</p>
                     </div>
 
-                    <span class="badge">ACTIVE</span>
+                    <span class="badge" id="storageBadge">READY</span>
 
                 </div>
 
 
                 <div class="agent">
 
-                    <span class="agent-status active"></span>
+                    <span class="agent-status" id="spoilageAgentDot"></span>
+
+                    <div>
+                        <strong>Spoilage Agent</strong>
+                        <p>Temperature and humidity risk</p>
+                    </div>
+
+                    <span class="badge" id="spoilageBadge">READY</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status" id="logisticsAgentDot"></span>
 
                     <div>
                         <strong>Logistics Agent</strong>
                         <p>Warehouse coordination</p>
                     </div>
 
-                    <span class="badge">ACTIVE</span>
+                    <span class="badge" id="logisticsBadge">READY</span>
+
+                </div>
+
+
+                <div class="agent">
+
+                    <span class="agent-status" id="financeAgentDot"></span>
+
+                    <div>
+                        <strong>Finance Agent</strong>
+                        <p>Trust score and loan receipt</p>
+                    </div>
+
+                    <span class="badge" id="financeBadge">READY</span>
 
                 </div>
 
@@ -269,8 +297,8 @@
 
                 </div>
 
-                <button onclick="runSimulation()">
-                    ▶ Run Simulation
+                <button type="button" onclick="runSimulation()">
+                    ▶ Run coordination
                 </button>
 
             </div>
@@ -334,7 +362,43 @@
 
                 </div>
 
+
+                <div>
+
+                    <label>
+                        Soil type
+                    </label>
+
+                    <select id="soilType">
+                        <option value="loamy">Loamy</option>
+                        <option value="sandy">Sandy</option>
+                        <option value="clayey">Clayey</option>
+                        <option value="alluvial">Alluvial</option>
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Storage scenario
+                    </label>
+
+                    <select id="storageScenario">
+                        <option value="spoilage">Rising heat and humidity</option>
+                        <option value="normal">Stable storage</option>
+                    </select>
+
+                </div>
+
             </div>
+
+            <p class="health-note" id="pipelineNote">
+                Coordination runs groundwater, crop rules, sensors, storage, spoilage, logistics, trust, and the loan check in that order.
+            </p>
+
+            <div class="health-results" id="pipelineResults"></div>
 
         </section>
 

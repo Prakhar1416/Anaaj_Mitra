@@ -1,6 +1,16 @@
 # Anaaj Mitra
 
-Smart-village resource coordination prototype. The browser page still runs the environmental simulation on its own. The Python backend stores hamlet health priority, asks a logistics adapter to reassess stock, and exposes that state to the page.
+Merged group build. One web app runs the members' modules in dependency order:
+
+1. CGWB water assessment, then crop rules that use that water condition.
+2. Warehouse sensor reading, then storage capacity and spoilage.
+3. Logistics, which looks for another warehouse when storage cannot take the crop.
+4. Trust score from the storage fill, then the loan decision.
+5. Validation of those outputs. The health report on the page reassesses nutrition priority against the stock this pipeline publishes.
+
+`streams/environment` is the CGWB water and crop work. `streams/iot` is sensor, storage, spoilage, and the actuator. `streams/logistics` is the warehouse-transfer agent. `streams/finance` is trust, loans, and validation. The dashboard and health workflow stay in `backend/`.
+
+Smart-village resource coordination prototype. The Python backend stores hamlet health priority, asks a logistics adapter to reassess stock, and exposes that state to the page. Use **Run coordination** on the dashboard to execute the merged pipeline. The sliders are sent with that run. If the API is unreachable, the page falls back to the original in-browser simulation.
 
 Warehouse stock shipped with this backend is simulated and labelled `simulated`. A logistics result is a recommendation. It is not a completed delivery.
 

@@ -1,0 +1,4 @@
+Source: Ground Water Year Book 2024-25, NCR, Bhopal, Madhya Pradesh, CGWB.
+Groundwater rows extracted: 1300 (Jan 2025 village-level annexure).
+District rainfall rows extracted: 52 (Table 2.2, year 2024).
+All groundwater rows labelled REAL_CGWB. Annual rainfall is not 30-day rainfall.

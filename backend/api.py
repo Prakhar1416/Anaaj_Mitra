@@ -36,6 +36,7 @@ from backend.schemas import (
     WarehouseOut,
     WarehouseStockIn,
 )
+from backend.pipeline import run_coordination
 from backend.shared_state import STREAMS, SharedState
 
 logger = logging.getLogger("anaaj_mitra")
@@ -68,6 +69,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             {"name": "State", "description": "Shared hamlet, warehouse, stream, and log state."},
             {"name": "Logistics", "description": "Priority reassessment recommendations."},
             {"name": "Storage", "description": "Warehouse stock written by the storage stream."},
+            {
+                "name": "Coordination",
+                "description": "Water, crop, storage, spoilage, logistics, trust, and loan in dependency order.",
+            },
         ],
     )
     app.add_middleware(
@@ -326,6 +331,28 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 404,
             )
         return updated
+
+    @app.post("/api/pipeline/run", tags=["Coordination"])
+    def run_pipeline(payload: dict[str, Any], request: Request) -> dict[str, Any]:
+        """Run the merged agents and publish stock, spoilage, finance, and verification."""
+        result = run_coordination(
+            request.app.state.shared_state,
+            request.app.state.settings,
+            payload,
+        )
+        request.app.state.pipeline_result = result
+        return result
+
+    @app.get("/api/pipeline/latest", tags=["Coordination"])
+    def latest_pipeline(request: Request) -> dict[str, Any]:
+        result = getattr(request.app.state, "pipeline_result", None)
+        if result is None:
+            raise AppError(
+                "pipeline_not_run",
+                "Run the coordination pipeline before reading its latest result.",
+                404,
+            )
+        return result
 
     return app
 
